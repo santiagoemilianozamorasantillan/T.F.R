@@ -12,62 +12,57 @@ const defaultSettings = {
 };
 
 export const AccessibilityProvider = ({ children }) => {
-  const [settings, setSettings] = useState(defaultSettings);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const loadSettings = () => {
+  // Inicializamos el estado leyendo directamente del localStorage si existe
+  const [settings, setSettings] = useState(() => {
     try {
       const saved = localStorage.getItem('tramita_a11y');
-      if (saved) {
-        setSettings({ ...defaultSettings, ...JSON.parse(saved) });
-      }
-    } catch (e) {
-      console.error('Error loading accessibility settings', e);
+      return saved ? { ...defaultSettings, ...JSON.parse(saved) } : defaultSettings;
+    } catch (error) {
+      console.error('Error loading accessibility settings', error);
+      return defaultSettings;
     }
-    setIsLoaded(true);
-  };
+  });
 
   useEffect(() => {
-    loadSettings();
-  }, []);
-
-  useEffect(() => {
-    if (!isLoaded) return;
-
-    // Save to localStorage
+    // 1. Guardar siempre en localStorage cuando cambie 'settings'
     localStorage.setItem('tramita_a11y', JSON.stringify(settings));
 
-    // Apply to document
+    // 2. Aplicar clases al HTML root
     const root = document.documentElement;
-    
-    // Text Size
-    root.classList.remove('text-size-100', 'text-size-120', 'text-size-140', 'text-size-160');
-    root.classList.add(`text-size-${settings.textSize}`);
 
-    // High Contrast
-    if (settings.highContrast) root.classList.add('high-contrast');
-    else root.classList.remove('high-contrast');
-
-    // Theme
+    // --- Tema (Modo Oscuro) ---
+    // Limpiamos primero
     root.classList.remove('dark');
-    if (settings.theme === 'dark' || (settings.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    
+    // Verificamos si es dark o si es auto y el sistema prefiere dark
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (settings.theme === 'dark' || (settings.theme === 'auto' && prefersDark)) {
       root.classList.add('dark');
     }
 
-    // Reduced Animations
+    // --- Tamaño de Texto ---
+    root.classList.remove('text-size-100', 'text-size-120', 'text-size-140', 'text-size-160');
+    root.classList.add(`text-size-${settings.textSize}`);
+
+    // --- Alto Contraste ---
+    if (settings.highContrast) root.classList.add('high-contrast');
+    else root.classList.remove('high-contrast');
+
+    // --- Animaciones Reducidas ---
     if (settings.reducedAnimations) root.classList.add('reduced-motion');
     else root.classList.remove('reduced-motion');
 
-    // Dyslexia Font
+    // --- Fuente para Dislexia ---
     if (settings.dyslexiaFont) root.classList.add('dyslexia-font');
     else root.classList.remove('dyslexia-font');
 
-    // Increased Spacing
+    // --- Espaciado Aumentado ---
     if (settings.increasedSpacing) root.classList.add('spacing-increased');
     else root.classList.remove('spacing-increased');
 
-  }, [settings, isLoaded]);
+  }, [settings]);
 
+  // Funciones de actualización
   const updateTextSize = (size) => setSettings(s => ({ ...s, textSize: size }));
   const updateHighContrast = (val) => setSettings(s => ({ ...s, highContrast: val }));
   const updateTheme = (val) => setSettings(s => ({ ...s, theme: val }));
@@ -85,8 +80,7 @@ export const AccessibilityProvider = ({ children }) => {
     updateReducedAnimations,
     updateDyslexiaFont,
     updateIncreasedSpacing,
-    resetToDefaults,
-    loadSettings
+    resetToDefaults
   };
 
   return (
