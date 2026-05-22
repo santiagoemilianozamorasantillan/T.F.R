@@ -142,3 +142,45 @@
 .dyslexia-font, .dyslexia-font *, .dyslexia-font p, .dyslexia-font span, .dyslexia-font h1, .dyslexia-font h2, .dyslexia-font h3, .dyslexia-font li {
   font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
 }
+
+/* 1. Tamaños de Texto */
+.text-size-100 { font-size: 100%; }
+.text-size-120 { font-size: 120%; }
+.text-size-140 { font-size: 140%; }
+.text-size-160 { font-size: 160%; }
+
+/* 2. Alto Contraste */
+.high-contrast {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity)) !important;
+  color: yellow !important;
+}
+.high-contrast * {
+  border-color: yellow !important;
+}
+.high-contrast a, .high-contrast button {
+  color: cyan !important;
+}
+
+/* 3. Animaciones Reducidas */
+.reduced-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* 4. Fuente para Dislexia */
+/* Asegúrate de tener la fuente descargada o vinculada si vas a usar OpenDyslexic real.
+   Por ahora, usamos un reemplazo seguro que mejora la legibilidad. */
+.dyslexia-font, .dyslexia-font * {
+  font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif !important;
+  letter-spacing: 0.05em !important;
+}
+
+/* 5. Espaciado Aumentado */
+.spacing-increased, .spacing-increased * {
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+  line-height: 1.8 !important;
+}
