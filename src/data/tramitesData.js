@@ -65,7 +65,7 @@ export const categoriesData = {
   }
 };
 
-// 2. DETALLE PASO A PASO
+// 2. DETALLE PASO A PASO (CON SECCIÓN DE OBTENCIÓN Y VÍNCULOS AGREGADOS)
 export const tramitesDetailData = {
   "acta-de-nacimiento": {
     title: "ACTA DE NACIMIENTO (COPIA CERTIFICADA EN LÍNEA)",
@@ -83,6 +83,14 @@ export const tramitesDetailData = {
       "Clave Única de Registro de Población (CURP)",
       "Datos personales (nombre completo, fecha de nacimiento, entidad de registro, nombres de los padres)",
       "Tarjeta de crédito/débito para pago"
+    ],
+    comoObtener: [
+      "La CURP se descarga gratis desde el portal oficial de SEGOB.",
+      "El pago se realiza de forma segura dentro de la misma plataforma del gobierno usando tu tarjeta bancaria bancaria o en ventanilla."
+    ],
+    links: [
+      { name: "Portal Oficial de Actas de Nacimiento", url: "https://www.gob.mx/ActaNacimiento/" },
+      { name: "Consultar CURP Gratis", url: "https://www.gob.mx/curp/" }
     ]
   },
   "cambio-domicilio-ine": {
@@ -92,7 +100,7 @@ export const tramitesDetailData = {
     difficulty: "Medio",
     pasos: [
       "Agendar una cita en el portal web del INE.",
-      "Acudir al Módulo de Atención Ciudadana seleccionado el día de la cita con los documentos originals.",
+      "Acudir al Módulo de Atención Ciudadana seleccionado el día de la cita con los documentos originales.",
       "Confirmar los datos en el sistema y capturar fotografía y huellas.",
       "Recoger la nueva credencial en la fecha indicada con el comprobante del trámite."
     ],
@@ -100,6 +108,14 @@ export const tramitesDetailData = {
       "Documento de identidad (acta de nacimiento)",
       "Identificación con fotografía (credencial actual)",
       "Comprobante de domicilio reciente (no mayor a 3 meses)"
+    ],
+    comoObtener: [
+      "El acta de nacimiento original la puedes obtener certificada en línea.",
+      "Los comprobantes de domicilio aceptados son luz, agua, teléfono o predial (pueden ser tus recibos digitales oficiales impresos)."
+    ],
+    links: [
+      { name: "Sistema de Citas INE", url: "https://ubicatumodulo.ine.mx/" },
+      { name: "Obtener Acta de Nacimiento en Línea", url: "https://www.gob.mx/ActaNacimiento/" }
     ]
   },
   "curp-consulta-impresion": {
@@ -115,6 +131,12 @@ export const tramitesDetailData = {
     ],
     requisitos: [
       "Conocer la CURP o tener a la mano los datos personales básicos."
+    ],
+    comoObtener: [
+      "Si no te sabes tu CURP, selecciona la pestaña 'Datos Personales' para buscarla introduciendo tu nombre, fecha y estado de nacimiento."
+    ],
+    links: [
+      { name: "Portal de Consulta de CURP (SEGOB)", url: "https://www.gob.mx/curp/" }
     ]
   },
   "pasaporte-agendado-cita": {
@@ -133,6 +155,14 @@ export const tramitesDetailData = {
       "Identificación oficial vigente",
       "CURP certificada",
       "Comprobante de pago de derechos."
+    ],
+    comoObtener: [
+      "La cita se agenda exclusivamente en el portal del Gobierno SRE o vía su número de WhatsApp oficial.",
+      "El formato de pago se descarga al terminar de agendar la cita y se paga físicamente en el banco antes de acudir a las oficinas."
+    ],
+    links: [
+      { name: "Portal de Citas SRE", url: "https://citas.sre.gob.mx/" },
+      { name: "Formatos e Información de Costos SRE", url: "https://www.gob.mx/pasaporte" }
     ]
   },
   "cita-sat": {
@@ -150,6 +180,13 @@ export const tramitesDetailData = {
       "RFC",
       "CURP",
       "Un correo electrónico personal."
+    ],
+    comoObtener: [
+      "Si no recuerdas tu RFC, puedes consultarlo de forma oficial con tu CURP en el portal de trámites del SAT."
+    ],
+    links: [
+      { name: "Portal General Citas SAT", url: "https://citas.sat.gob.mx/" },
+      { name: "Consulta de RFC con CURP", url: "https://www.sat.gob.mx/aplicacion/operacion/31274/consulta-tu-clave-de-rfc-mediante-curp" }
     ]
   },
   "firma-electronica": {
@@ -169,6 +206,14 @@ export const tramitesDetailData = {
       "CURP",
       "Comprobante de domicilio",
       "Memoria USB."
+    ],
+    comoObtener: [
+      "Debes adquirir una memoria USB completamente nueva o formateada.",
+      "La cita se obtiene en la aplicación de Citas SAT seleccionando el módulo correspondiente."
+    ],
+    links: [
+      { name: "Obtener Cita para e.firma", url: "https://citas.sat.gob.mx/" },
+      { name: "Requisitos Completos e.firma - SAT", url: "https://www.sat.gob.mx" }
     ]
   },
   "declaracion-anual": {
@@ -187,6 +232,14 @@ export const tramitesDetailData = {
       "Contraseña o e.firma vigente",
       "CLABE interbancaria (en caso de saldo a favor)",
       "Facturas de deducciones personales."
+    ],
+    comoObtener: [
+      "La CLABE interbancaria la obtienes directamente desde la app móvil de tu banco o en tu estado de cuenta.",
+      "La contraseña SAT la puedes generar o renovar desde casa a través de la aplicación oficial SAT ID."
+    ],
+    links: [
+      { name: "Portal de Declaración Anual SAT", url: "https://www.sat.gob.mx/" },
+      { name: "Generar Contraseña con SAT ID", url: "https://satid.sat.gob.mx/" }
     ]
   },
   "creacion-contrasena-sat": {
@@ -205,6 +258,12 @@ export const tramitesDetailData = {
       "RFC",
       "Correo electrónico",
       "Teléfono celular."
+    ],
+    comoObtener: [
+      "La app SAT ID está disponible de forma gratuita para iOS y Android, o bien puedes realizarlo en su portal web oficial con una cámara web activa."
+    ],
+    links: [
+      { name: "Sitio Web SAT ID", url: "https://satid.sat.gob.mx/" }
     ]
   },
   "pension-cesantia-vejez-imss": {
@@ -223,6 +282,14 @@ export const tramitesDetailData = {
       "Identificación oficial",
       "Estado de cuenta AFORE",
       "Estado de cuenta bancario con CLABE."
+    ],
+    comoObtener: [
+      "El estado de cuenta de tu AFORE se solicita directamente en la aplicación móvil de tu Administradora de Fondos o llamando a su línea de atención.",
+      "Puedes revisar tus semanas cotizadas oficiales en línea antes de iniciar el trámite."
+    ],
+    links: [
+      { name: "Consultar Semanas Cotizadas", url: "https://serviciosdigitales.imss.gob.mx/semanascotizadas-web/usuarios/IngresoAsignado" },
+      { name: "Localiza tu AFORE (CONSAR)", url: "https://www.gob.mx/consar" }
     ]
   },
   "incapacidad-medica-imss": {
@@ -240,6 +307,14 @@ export const tramitesDetailData = {
       "Identificación oficial",
       "Cartilla Nacional de Salud",
       "Estar vigente en el IMSS."
+    ],
+    comoObtener: [
+      "La vigencia de derechos se puede consultar y descargar en segundos desde el escritorio virtual del IMSS.",
+      "El registro de tu CLABE para el cobro de la incapacidad se realiza en el portal del IMSSDigital."
+    ],
+    links: [
+      { name: "Consultar Vigencia de Derechos IMSS", url: "https://serviciosdigitales.imss.gob.mx/gestion/vigencia" },
+      { name: "Escritorio Virtual IMSS Digital", url: "https://www.imss.gob.mx/digital" }
     ]
   },
   "alta-imss-asignacion-nss": {
@@ -250,13 +325,19 @@ export const tramitesDetailData = {
     pasos: [
       "Ingresar al portal \"Asignación o Localización de NSS\" del IMSS.",
       "Llenar el formulario con CURP y correo.",
-      "Descargar el documento con el NSS y la tarjeta correspondiente.",
+      "Descargar el documento con el NSS and la tarjeta correspondiente.",
       "Entregar el número al empleador para que realice el alta patronal."
     ],
     requisitos: [
       "CURP",
       "Correo electrónico personal",
       "Acta de nacimiento."
+    ],
+    comoObtener: [
+      "El trámite es completamente digital y gratuito en la página oficial del Seguro Social. Solo necesitas tu CURP y un correo electrónico."
+    ],
+    links: [
+      { name: "Trámite de Asignación de NSS", url: "https://serviciosdigitales.imss.gob.mx/gestion/nss" }
     ]
   },
   "consulta-semanas-cotizadas": {
@@ -274,6 +355,13 @@ export const tramitesDetailData = {
       "CURP",
       "NSS (Número de Seguridad Social)",
       "Correo electrónico."
+    ],
+    comoObtener: [
+      "Tanto tu CURP como tu NSS se pueden obtener en línea en caso de que los hayas extraviado, usando los portales del gobierno correspondientes."
+    ],
+    links: [
+      { name: "Portal de Semanas Cotizadas IMSS", url: "https://serviciosdigitales.imss.gob.mx/semanascotizadas-web/usuarios/IngresoAsignado" },
+      { name: "Localizar tu NSS en Línea", url: "https://serviciosdigitales.imss.gob.mx/gestion/nss" }
     ]
   },
   "cita-medica-imss": {
@@ -292,6 +380,13 @@ export const tramitesDetailData = {
       "NSS",
       "Correo electrónico",
       "Estar vigente en sus derechos."
+    ],
+    comoObtener: [
+      "Puedes descargar la app 'IMSS Digital' desde la Play Store (Android) o App Store (iOS) en tu celular para agendar citas en un par de clics."
+    ],
+    links: [
+      { name: "Portal de Citas Médicas IMSS Web", url: "https://citamedicadigital.imss.gob.mx/" },
+      { name: "Página de Descarga IMSS Digital", url: "https://www.imss.gob.mx/digital" }
     ]
   },
   "surtido-medicamentos-resurtible": {
@@ -309,6 +404,12 @@ export const tramitesDetailData = {
       "Estar integrado al programa de receta resurtible por el médico familiar",
       "Carnet de citas",
       "Receta impresa."
+    ],
+    comoObtener: [
+      "La receta resurtible la emite únicamente el médico familiar del IMSS tras valorar que tu padecimiento crónico se encuentra bajo control."
+    ],
+    links: [
+      { name: "Información Programa Receta Resurtible", url: "https://www.imss.gob.mx" }
     ]
   },
   "correccion-datos-imss": {
@@ -327,6 +428,12 @@ export const tramitesDetailData = {
       "Identificación oficial",
       "CURP certificada",
       "Documento expedido por el IMSS con el NSS a corregir."
+    ],
+    comoObtener: [
+      "El trámite se puede iniciar de manera digital ingresando con tu e.firma o CURP en el Escritorio Virtual del IMSS."
+    ],
+    links: [
+      { name: "Corrección de Datos en Escritorio Virtual", url: "https://serviciosdigitales.imss.gob.mx/bvirtual-web/inicio" }
     ]
   },
   "vigencia-de-derechos": {
@@ -344,6 +451,12 @@ export const tramitesDetailData = {
       "CURP",
       "NSS",
       "Correo electrónico."
+    ],
+    comoObtener: [
+      "Este documento se genera de forma inmediata y 100% gratuita a través del portal oficial de trámites del IMSS digitales."
+    ],
+    links: [
+      { name: "Portal de Consulta de Vigencia IMSS", url: "https://serviciosdigitales.imss.gob.mx/gestion/vigencia" }
     ]
   },
   "regularizacion-escrituras": {
@@ -362,6 +475,12 @@ export const tramitesDetailData = {
       "Comprobantes de pago de predial y agua",
       "Identificación oficial",
       "Croquis de ubicación."
+    ],
+    comoObtener: [
+      "Los comprobantes de pago de predial y agua se obtienen en las oficinas de la tesorería de tu municipio o en sus portales digitales de recaudación."
+    ],
+    links: [
+      { name: "Portal de Trámites de la Propiedad (Gobierno)", url: "https://www.gob.mx" }
     ]
   },
   "herencia-vivienda": {
@@ -380,6 +499,12 @@ export const tramitesDetailData = {
       "Testamento original",
       "Actas de nacimiento de los herederos",
       "Escrituras del inmueble."
+    ],
+    comoObtener: [
+      "El acta de defunción se tramita ante las oficinas del Registro Civil de la localidad donde ocurrió el deceso o en sus servicios digitales estatales."
+    ],
+    links: [
+      { name: "Directorio de Notarios de México", url: "https://www.gob.mx" }
     ]
   },
   "compra-vivienda": {
@@ -398,6 +523,12 @@ export const tramitesDetailData = {
       "Escrituras previas",
       "Libertad de gravamen",
       "Comprobante de pago de impuestos."
+    ],
+    comoObtener: [
+      "El certificado de Libertad de Gravamen se solicita formalmente ante el Registro Público de la Propiedad de tu entidad federativa."
+    ],
+    links: [
+      { name: "Guía de Compra de Vivienda (PROFECO)", url: "https://www.gob.mx/profeco" }
     ]
   },
   "credito-infonavit": {
@@ -416,6 +547,12 @@ export const tramitesDetailData = {
       "Contar con los puntos mínimos requeridos (1080 puntos)",
       "Precalificación",
       "Avalúo de la vivienda."
+    ],
+    comoObtener: [
+      "La precalificación de puntos y el curso obligatorio se realizan de manera virtual registrándote en el portal 'Mi Cuenta Infonavit'."
+    ],
+    links: [
+      { name: "Portal Mi Cuenta INFONAVIT", url: "https://micuenta.infonavit.org.mx/" }
     ]
   },
   "pasaporte-uso": {
@@ -430,6 +567,12 @@ export const tramitesDetailData = {
     requisitos: [
       "Pasaporte con al menos 6 meses de vigencia restantes",
       "Hojas en blanco para sellos."
+    ],
+    comoObtener: [
+      "Para renovar u obtener uno nuevo por pérdida, debes sacar cita previa en las delegaciones u oficinas en el portal oficial de Citas de la SRE."
+    ],
+    links: [
+      { name: "Agendar Renovación en SRE", url: "https://citas.sre.gob.mx/" }
     ]
   },
   "visa-turista": {
@@ -448,6 +591,12 @@ export const tramitesDetailData = {
       "Formulario de solicitud (DS-160)",
       "Pago de la cuota de solicitud",
       "Fotografía reciente."
+    ],
+    comoObtener: [
+      "El formulario DS-160 se llena únicamente de manera electrónica en el portal oficial de Visas del Departamento de Estado del país de destino."
+    ],
+    links: [
+      { name: "Portal Oficial de Embajada de EE.UU.", url: "https://mx.usembassy.gov/es/" }
     ]
   },
   "documentacion-digital": {
@@ -465,6 +614,12 @@ export const tramitesDetailData = {
       "Pasaporte",
       "Boleto de avión",
       "Detalles del alojamiento."
+    ],
+    comoObtener: [
+      "Los permisos migratorios electrónicos oficiales (como el ESTA o similares) se solicitan y aprueban vía web únicamente en los portales gubernamentales legítimos."
+    ],
+    links: [
+      { name: "Guía del Viajero - SRE", url: "https://guiadelviajero.sre.gob.mx/" }
     ]
   },
   "check-in-aerolinea": {
@@ -482,6 +637,12 @@ export const tramitesDetailData = {
       "Clave de reservación (PNR)",
       "Apellidos del pasajero",
       "Smartphone."
+    ],
+    comoObtener: [
+      "Tu clave de reservación (código alfanumérico de 6 caracteres) te llega directo al correo electrónico que usaste para comprar el vuelo."
+    ],
+    links: [
+      { name: "Consulta de Vuelos - AICM", url: "https://www.aicm.com.mx/" }
     ]
   },
   "beca-benito-juarez": {
@@ -499,6 +660,12 @@ export const tramitesDetailData = {
       "Estar inscrito en una escuela pública de modalidad escolarizada",
       "No contar con otra beca federal",
       "Comprobante de inscripción."
+    ],
+    comoObtener: [
+      "El Buscador de Estatus digital oficial te indicará con precisión si tu escuela califica y las fechas exactas para llenar tu cédula en línea."
+    ],
+    links: [
+      { name: "Buscador de Estatus Benito Juárez", url: "https://buscador.becasbenitojuarez.gob.mx/" }
     ]
   },
   "pension-bienestar-adultos": {
@@ -518,6 +685,12 @@ export const tramitesDetailData = {
       "CURP",
       "Acta de nacimiento",
       "Comprobante de domicilio."
+    ],
+    comoObtener: [
+      "El módulo de atención física que te corresponde por domicilio lo debes ubicar usando la plataforma interactiva de la Secretaría del Bienestar."
+    ],
+    links: [
+      { name: "Ubica tu Módulo Bienestar", url: "https://www.gob.mx/bienestar" }
     ]
   },
   "jovenes-construyendo-futuro": {
@@ -537,6 +710,12 @@ export const tramitesDetailData = {
       "Identificación oficial",
       "Comprobante de domicilio",
       "CURP."
+    ],
+    comoObtener: [
+      "La inscripción como aprendiz y la posterior postulación al centro de capacitación elegido se efectúa 100% en la plataforma oficial del programa."
+    ],
+    links: [
+      { name: "Plataforma Jóvenes Construyendo el Futuro", url: "https://jovenesconstruyendoelfuturo.stps.gob.mx/" }
     ]
   }
 };

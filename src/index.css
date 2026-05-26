@@ -142,3 +142,42 @@
 .dyslexia-font, .dyslexia-font *, .dyslexia-font p, .dyslexia-font span, .dyslexia-font h1, .dyslexia-font h2, .dyslexia-font h3, .dyslexia-font li {
   font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
 }
+
+/* ==========================================
+   NUEVAS REGLAS: FILTROS, COLOR Y TEXTO
+   ========================================== */
+
+/* 6. Filtro de Luz Azul (Tono sepia para descansar la vista) */
+.blue-light-filter {
+  filter: sepia(40%) hue-rotate(-10deg) saturate(90%) !important;
+}
+/* Combinación por si activan Luz Azul y Alto Contraste al mismo tiempo */
+.high-contrast.blue-light-filter {
+  filter: contrast(1.3) sepia(40%) hue-rotate(-10deg) saturate(90%) !important;
+}
+
+/* 7. Saturación de Color (Baja y Alta) */
+.saturation-50 {
+  filter: saturate(50%) !important;
+}
+.saturation-150 {
+  filter: saturate(150%) !important;
+}
+/* Evitamos que la saturación pise al alto contraste o luz azul usando :not() si es necesario, 
+   pero CSS permite encadenarlos si se hace en JavaScript. Por ahora los mantenemos separados. */
+
+/* 8. Forzar Textos a Mayúsculas */
+.force-uppercase p, 
+.force-uppercase span, 
+.force-uppercase h1, 
+.force-uppercase h2, 
+.force-uppercase h3, 
+.force-uppercase h4,
+.force-uppercase h5,
+.force-uppercase h6,
+.force-uppercase li, 
+.force-uppercase a, 
+.force-uppercase button,
+.force-uppercase label {
+  text-transform: uppercase !important;
+}

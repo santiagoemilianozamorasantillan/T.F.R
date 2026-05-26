@@ -1,116 +1,131 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { tramitesDetailData } from '@/data/tramitesData'; // Usando el alias @ de tu proyecto
+import { tramitesDetailData } from '@/data/tramitesData'; 
+import { ArrowLeft, CheckCircle2, FileText, HelpCircle, ExternalLink } from 'lucide-react';
 
-function GuideDetailPage() {
-  const { id } = useParams();
+const GuideDetailPage = () => {
+  const { id } = useParams(); // Usamos 'id' porque así está en tu App.jsx
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('pasos');
 
-  // Buscar el trámite en tu base de datos
-  const tramite = tramitesDetailData[id];
+  // Buscamos los datos del trámite usando el id de la URL
+  const tramite = tramitesDetailData ? tramitesDetailData[id] : null;
 
-  // Si el trámite no existe
   if (!tramite) {
     return (
-      <div style={{ padding: '40px', textAlign: 'center' }}>
-        <h2 className="text-2xl font-bold mb-2">Trámite no encontrado</h2>
-        <p className="text-muted-foreground mb-4">
-          Los detalles para este trámite aún no están disponibles.
-        </p>
-        <button 
-          onClick={() => navigate(-1)}
-          className="bg-primary text-primary-foreground px-4 py-2 rounded-lg"
-        >
-          Volver atrás
-        </button>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+        <div className="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm max-w-md w-full text-center">
+          <h2 className="text-xl font-bold text-gray-900 mb-4">Trámite no encontrado</h2>
+          <button onClick={() => navigate('/')} className="w-full bg-black text-white py-2.5 rounded-xl text-sm font-semibold">
+            Volver al Inicio
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Botón de Regresar */}
-      <button
-        onClick={() => navigate(-1)}
-        className="text-muted-foreground hover:text-foreground mb-6 block"
-      >
-        ← Volver a la categoría
-      </button>
-
-      {/* Cabecera del Trámite */}
-      <div className="bg-card border rounded-2xl p-6 md:p-8 shadow-sm mb-8">
-        <h1 className="text-2xl md:text-3xl font-extrabold text-foreground mb-3">
-          {tramite.title}
-        </h1>
-        <p className="text-muted-foreground text-base mb-6">
-          {tramite.description}
-        </p>
-
-        <div className="flex flex-wrap gap-4 pt-4 border-t border-border">
-          <div className="bg-muted px-3 py-1.5 rounded-full text-sm font-medium">
-            ⏱️ Tiempo estimado: <strong>{tramite.time}</strong>
-          </div>
-          <div className="bg-muted px-3 py-1.5 rounded-full text-sm font-medium">
-            📊 Dificultad: <strong>{tramite.difficulty}</strong>
-          </div>
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      {/* Banner Superior */}
+      <div className="bg-[#0052CC] text-white py-12 px-6">
+        <div className="max-w-3xl mx-auto">
+          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-sm font-semibold mb-4 text-blue-100 hover:text-white transition-colors">
+            <ArrowLeft className="w-4 h-4" /> Volver atrás
+          </button>
+          <h1 className="text-2xl font-extrabold mb-2 uppercase tracking-tight">{tramite.title}</h1>
+          <p className="text-blue-100 text-sm max-w-2xl">{tramite.description}</p>
         </div>
       </div>
 
-      {/* Selector de Pestañas */}
-      <div className="flex border-b border-border mb-6">
-        <button
-          onClick={() => setActiveTab('pasos')}
-          className={`px-6 py-3 border-b-2 font-semibold text-sm md:text-base transition-colors ${
-            activeTab === 'pasos'
-              ? 'border-primary text-primary'
-              : 'border-transparent text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          📋 Pasos a seguir ({tramite.pasos?.length || 0})
-        </button>
-        <button
-          onClick={() => setActiveTab('requisitos')}
-          className={`px-6 py-3 border-b-2 font-semibold text-sm md:text-base transition-colors ${
-            activeTab === 'requisitos'
-              ? 'border-primary text-primary'
-              : 'border-transparent text-muted-foreground hover:text-foreground'
-          }`}
-        >
-          ✅ Requisitos necesarios ({tramite.requisitos?.length || 0})
-        </button>
-      </div>
-
-      {/* Contenido de las Pestañas */}
-      <div className="bg-card border rounded-2xl p-6 md:p-8 shadow-sm min-h-[200px]">
-        {activeTab === 'pasos' ? (
-          <div className="relative border-l-2 border-muted pl-6 space-y-6 ml-3">
-            {tramite.pasos?.map((paso, index) => (
-              <div key={index} className="relative">
-                <span className="absolute -left-[35px] top-0 bg-primary text-primary-foreground font-bold rounded-full w-6 h-6 flex items-center justify-center text-xs">
-                  {index + 1}
-                </span>
-                <p className="text-foreground text-base font-medium pt-0.5">
-                  {paso}
-                </p>
-              </div>
-            ))}
+      {/* Contenedor de Pestañas */}
+      <div className="max-w-3xl mx-auto px-6 py-10">
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+          
+          {/* Encabezados de las 3 Pestañas */}
+          <div className="flex border-b border-gray-100 bg-gray-50">
+            <button 
+              onClick={() => setActiveTab('pasos')} 
+              className={`flex-1 py-4 text-center text-sm font-bold border-b-2 flex items-center justify-center gap-2 transition-colors ${activeTab === 'pasos' ? 'border-[#0052CC] text-[#0052CC] bg-white' : 'border-transparent text-gray-500'}`}
+            >
+              <CheckCircle2 className="w-4 h-4" /> Pasos
+            </button>
+            <button 
+              onClick={() => setActiveTab('requisitos')} 
+              className={`flex-1 py-4 text-center text-sm font-bold border-b-2 flex items-center justify-center gap-2 transition-colors ${activeTab === 'requisitos' ? 'border-[#0052CC] text-[#0052CC] bg-white' : 'border-transparent text-gray-500'}`}
+            >
+              <FileText className="w-4 h-4" /> Requisitos
+            </button>
+            <button 
+              onClick={() => setActiveTab('comoObtener')} 
+              className={`flex-1 py-4 text-center text-sm font-bold border-b-2 flex items-center justify-center gap-2 transition-colors ${activeTab === 'comoObtener' ? 'border-[#0052CC] text-[#0052CC] bg-white' : 'border-transparent text-gray-500'}`}
+            >
+              <HelpCircle className="w-4 h-4" /> ¿Cómo obtenerlos?
+            </button>
           </div>
-        ) : (
-          <ul className="space-y-3">
-            {tramite.requisitos?.map((requisito, index) => (
-              <li key={index} className="flex items-start gap-3 bg-muted/40 p-3 rounded-xl">
-                <span className="text-emerald-500">✔</span>
-                <span className="text-foreground text-base">
-                  {requisito}
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
+
+          {/* Contenido Dinámico */}
+          <div className="p-6 md:p-8">
+            {/* 1. Pasos */}
+            {activeTab === 'pasos' && (
+              <div className="flex flex-col gap-4">
+                {tramite.pasos?.map((paso, i) => (
+                  <div key={i} className="flex gap-3 items-start text-sm">
+                    <span className="w-5 h-5 rounded-full bg-blue-50 text-[#0052CC] font-bold flex items-center justify-center shrink-0 mt-0.5">{i + 1}</span>
+                    <p className="text-gray-600 leading-relaxed">{paso}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* 2. Requisitos */}
+            {activeTab === 'requisitos' && (
+              <ul className="list-disc list-inside flex flex-col gap-2.5 text-sm text-gray-600">
+                {tramite.requisitos?.map((req, i) => (
+                  <li key={i} className="leading-relaxed">
+                    <span className="text-gray-700 font-medium">{req}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {/* 3. Nueva pestaña: Cómo Obtener e hipervínculos */}
+            {activeTab === 'comoObtener' && (
+              <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-3">
+                  {tramite.comoObtener?.map((info, i) => (
+                    <p key={i} className="text-sm bg-gray-50 p-3.5 rounded-xl border border-gray-100 text-gray-600 leading-relaxed">
+                      💡 {info}
+                    </p>
+                  ))}
+                </div>
+
+                {tramite.links && tramite.links.length > 0 && (
+                  <div className="mt-2">
+                    <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Enlaces Oficiales</h4>
+                    <div className="flex flex-col gap-2">
+                      {tramite.links.map((link, i) => (
+                        <a 
+                          key={i} 
+                          href={link.url} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="flex items-center justify-between p-3.5 rounded-xl bg-blue-50 border border-blue-100 text-[#0052CC] font-bold text-sm hover:bg-blue-100/70 transition-colors"
+                        >
+                          <span>{link.name}</span>
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default GuideDetailPage;

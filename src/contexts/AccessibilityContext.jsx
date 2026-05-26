@@ -8,7 +8,13 @@ const defaultSettings = {
   theme: 'light', // 'light', 'dark', 'auto'
   reducedAnimations: false,
   dyslexiaFont: false,
-  increasedSpacing: false
+  increasedSpacing: false,
+  // --- NUEVAS OPCIONES ---
+  blueLightFilter: false,
+  colorSaturation: 100, // Puede ser 50 (Baja), 100 (Normal), 150 (Alta)
+  uppercaseText: false,
+  preventAccidentalClicks: false,
+  showGlossary: true // Lo dejamos activado por defecto por ser muy útil
 };
 
 export const AccessibilityProvider = ({ children }) => {
@@ -34,40 +40,66 @@ export const AccessibilityProvider = ({ children }) => {
   useEffect(() => {
     if (!isLoaded) return;
 
-    // Save to localStorage
+    // Guardar en localStorage
     localStorage.setItem('tramita_a11y', JSON.stringify(settings));
 
-    // Apply to document
+    // Aplicar al documento
     const root = document.documentElement;
+    const body = document.body;
     
-    // Text Size
+    // --- 1. Tamaño de Texto ---
     root.classList.remove('text-size-100', 'text-size-120', 'text-size-140', 'text-size-160');
     root.classList.add(`text-size-${settings.textSize}`);
 
-    // High Contrast
+    // --- 2. Alto Contraste ---
     if (settings.highContrast) root.classList.add('high-contrast');
     else root.classList.remove('high-contrast');
 
-    // Theme
-    root.classList.remove('dark');
-    if (settings.theme === 'dark' || (settings.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    // --- 3. Tema Global (Solución implementada) ---
+    const isDarkTheme = 
+      settings.theme === 'dark' || 
+      (settings.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+    if (isDarkTheme) {
       root.classList.add('dark');
+      if (body) body.style.backgroundColor = '#121212'; 
+    } else {
+      root.classList.remove('dark');
+      if (body) body.style.backgroundColor = ''; 
     }
 
-    // Reduced Animations
+    // --- 4. Reducir Animaciones ---
     if (settings.reducedAnimations) root.classList.add('reduced-motion');
     else root.classList.remove('reduced-motion');
 
-    // Dyslexia Font
+    // --- 5. Tipografía Dislexia ---
     if (settings.dyslexiaFont) root.classList.add('dyslexia-font');
     else root.classList.remove('dyslexia-font');
 
-    // Increased Spacing
+    // --- 6. Espaciado Aumentado ---
     if (settings.increasedSpacing) root.classList.add('spacing-increased');
     else root.classList.remove('spacing-increased');
 
+    // ==========================================
+    // --- NUEVAS FUNCIONES VISUALES (PASO 1) ---
+    // ==========================================
+
+    // 7. Filtro de Luz Azul
+    if (settings.blueLightFilter) root.classList.add('blue-light-filter');
+    else root.classList.remove('blue-light-filter');
+
+    // 8. Saturación de Color
+    root.classList.remove('saturation-50', 'saturation-150');
+    if (settings.colorSaturation === 50) root.classList.add('saturation-50');
+    if (settings.colorSaturation === 150) root.classList.add('saturation-150');
+
+    // 9. Forzar Mayúsculas
+    if (settings.uppercaseText) root.classList.add('force-uppercase');
+    else root.classList.remove('force-uppercase');
+
   }, [settings, isLoaded]);
 
+  // Funciones originales
   const updateTextSize = (size) => setSettings(s => ({ ...s, textSize: size }));
   const updateHighContrast = (val) => setSettings(s => ({ ...s, highContrast: val }));
   const updateTheme = (val) => setSettings(s => ({ ...s, theme: val }));
@@ -75,6 +107,13 @@ export const AccessibilityProvider = ({ children }) => {
   const updateDyslexiaFont = (val) => setSettings(s => ({ ...s, dyslexiaFont: val }));
   const updateIncreasedSpacing = (val) => setSettings(s => ({ ...s, increasedSpacing: val }));
   
+  // Nuevas funciones actualizadoras
+  const updateBlueLightFilter = (val) => setSettings(s => ({ ...s, blueLightFilter: val }));
+  const updateColorSaturation = (val) => setSettings(s => ({ ...s, colorSaturation: val }));
+  const updateUppercaseText = (val) => setSettings(s => ({ ...s, uppercaseText: val }));
+  const updatePreventAccidentalClicks = (val) => setSettings(s => ({ ...s, preventAccidentalClicks: val }));
+  const updateShowGlossary = (val) => setSettings(s => ({ ...s, showGlossary: val }));
+
   const resetToDefaults = () => setSettings(defaultSettings);
 
   const value = {
@@ -85,6 +124,12 @@ export const AccessibilityProvider = ({ children }) => {
     updateReducedAnimations,
     updateDyslexiaFont,
     updateIncreasedSpacing,
+    // Exportamos las nuevas
+    updateBlueLightFilter,
+    updateColorSaturation,
+    updateUppercaseText,
+    updatePreventAccidentalClicks,
+    updateShowGlossary,
     resetToDefaults,
     loadSettings
   };
