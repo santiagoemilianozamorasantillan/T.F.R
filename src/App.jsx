@@ -17,6 +17,7 @@ import ScrollToTop from '@/components/ScrollToTop.jsx';
 import ForgotPasswordPage from './pages/ForgotPasswordPage';
 import CategoryDetailPage from '@/pages/CategoryDetailPage.jsx';
 import GuideDetailPage from '@/pages/GuideDetailPage.jsx'; 
+import ActualizarContrasenaPage from './pages/ActualizarContrasenaPage';
 
 // Este componente aplica las clases directamente al <body> del HTML
 const AccessibilityApplier = ({ children }) => {
@@ -75,6 +76,7 @@ function App() {
                   <Route path="/accesibilidad" element={<ProtectedRoute><AccessibilitySettingsPage /></ProtectedRoute>} />
                   <Route path="/categoria/:categoryId" element={<ProtectedRoute><CategoryDetailPage /></ProtectedRoute>} />
                   <Route path="/history" element={<ProtectedRoute><HistoryPage /></ProtectedRoute>} />
+                  <Route path="/actualizar-contrasena" element={<ActualizarContrasenaPage />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
               </main>

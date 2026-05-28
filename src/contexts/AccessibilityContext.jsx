@@ -18,6 +18,8 @@ const defaultSettings = {
 };
 
 export const AccessibilityProvider = ({ children }) => {
+
+  // Inicializamos el estado leyendo directamente del localStorage si existe
   const [settings, setSettings] = useState(() => {
     try {
       const saved = localStorage.getItem('tramita_a11y');
@@ -28,31 +30,36 @@ export const AccessibilityProvider = ({ children }) => {
     }
   });
 
-  // ¡AQUÍ ESTÁ LA MAGIA QUE FALTABA!
+  // ¡AQUÍ ESTÁ LA MAGIA CORREGIDA Y UNIFICADA!
   // Esto fuerza a la página a cambiar físicamente sus clases al instante
   useEffect(() => {
-    // 1. Guardar en memoria
+    // 1. Guardar en memoria siempre que cambie
     localStorage.setItem('tramita_a11y', JSON.stringify(settings));
     
     const root = document.documentElement; // Etiqueta <html>
     const body = document.body;            // Etiqueta <body>
 
-    // 2. Aplicar Tema Oscuro
-    root.classList.remove('dark');
+    // 2. Limpiar clases anteriores para no amontonarlas
+    root.classList.remove(
+      'dark', 'text-size-100', 'text-size-120', 'text-size-140', 'text-size-160',
+      'high-contrast', 'reduced-motion', 'dyslexia-font', 'spacing-increased'
+    );
+    body.className = ''; // Limpiamos el body de los filtros extra
+
+    // 3. Aplicar Tema Oscuro (Verificando preferencia del sistema si es 'auto')
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (settings.theme === 'dark' || (settings.theme === 'auto' && prefersDark)) {
       root.classList.add('dark');
     }
 
-    // 3. Limpiar clases de accesibilidad anteriores para no amontonarlas
-    body.className = ''; 
+    // 4. Inyectar tamaños y opciones principales (en HTML root)
+    root.classList.add(`text-size-${settings.textSize}`);
+    if (settings.highContrast) root.classList.add('high-contrast');
+    if (settings.reducedAnimations) root.classList.add('reduced-motion');
+    if (settings.dyslexiaFont) root.classList.add('dyslexia-font');
+    if (settings.increasedSpacing) root.classList.add('spacing-increased');
 
-    // 4. Inyectar todos los filtros y tamaños
-    body.classList.add(`text-size-${settings.textSize}`);
-    if (settings.highContrast) body.classList.add('high-contrast');
-    if (settings.reducedAnimations) body.classList.add('reduced-motion');
-    if (settings.dyslexiaFont) body.classList.add('dyslexia-font');
-    if (settings.increasedSpacing) body.classList.add('spacing-increased');
+    // 5. Inyectar filtros visuales nuevos (en Body)
     if (settings.blueLightFilter) body.classList.add('blue-light-filter');
     if (settings.colorSaturation !== 100) body.classList.add(`saturation-${settings.colorSaturation}`);
     if (settings.uppercaseText) body.classList.add('force-uppercase');
