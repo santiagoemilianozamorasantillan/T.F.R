@@ -9,105 +9,63 @@ const defaultSettings = {
   reducedAnimations: false,
   dyslexiaFont: false,
   increasedSpacing: false,
-  // --- NUEVAS OPCIONES ---
+  // --- Nuevas opciones ---
   blueLightFilter: false,
-  colorSaturation: 100, // Puede ser 50 (Baja), 100 (Normal), 150 (Alta)
+  colorSaturation: 100,
   uppercaseText: false,
   preventAccidentalClicks: false,
-  showGlossary: true // Lo dejamos activado por defecto por ser muy útil
+  showGlossary: false,
 };
 
 export const AccessibilityProvider = ({ children }) => {
-  const [settings, setSettings] = useState(defaultSettings);
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  const loadSettings = () => {
+  const [settings, setSettings] = useState(() => {
     try {
       const saved = localStorage.getItem('tramita_a11y');
-      if (saved) {
-        setSettings({ ...defaultSettings, ...JSON.parse(saved) });
-      }
-    } catch (e) {
-      console.error('Error loading accessibility settings', e);
+      return saved ? { ...defaultSettings, ...JSON.parse(saved) } : defaultSettings;
+    } catch (error) {
+      console.error('Error loading accessibility settings', error);
+      return defaultSettings;
     }
-    setIsLoaded(true);
-  };
+  });
 
+  // ¡AQUÍ ESTÁ LA MAGIA QUE FALTABA!
+  // Esto fuerza a la página a cambiar físicamente sus clases al instante
   useEffect(() => {
-    loadSettings();
-  }, []);
-
-  useEffect(() => {
-    if (!isLoaded) return;
-
-    // Guardar en localStorage
+    // 1. Guardar en memoria
     localStorage.setItem('tramita_a11y', JSON.stringify(settings));
-
-    // Aplicar al documento
-    const root = document.documentElement;
-    const body = document.body;
     
-    // --- 1. Tamaño de Texto ---
-    root.classList.remove('text-size-100', 'text-size-120', 'text-size-140', 'text-size-160');
-    root.classList.add(`text-size-${settings.textSize}`);
+    const root = document.documentElement; // Etiqueta <html>
+    const body = document.body;            // Etiqueta <body>
 
-    // --- 2. Alto Contraste ---
-    if (settings.highContrast) root.classList.add('high-contrast');
-    else root.classList.remove('high-contrast');
-
-    // --- 3. Tema Global (Solución implementada) ---
-    const isDarkTheme = 
-      settings.theme === 'dark' || 
-      (settings.theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-    if (isDarkTheme) {
+    // 2. Aplicar Tema Oscuro
+    root.classList.remove('dark');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (settings.theme === 'dark' || (settings.theme === 'auto' && prefersDark)) {
       root.classList.add('dark');
-      if (body) body.style.backgroundColor = '#121212'; 
-    } else {
-      root.classList.remove('dark');
-      if (body) body.style.backgroundColor = ''; 
     }
 
-    // --- 4. Reducir Animaciones ---
-    if (settings.reducedAnimations) root.classList.add('reduced-motion');
-    else root.classList.remove('reduced-motion');
+    // 3. Limpiar clases de accesibilidad anteriores para no amontonarlas
+    body.className = ''; 
 
-    // --- 5. Tipografía Dislexia ---
-    if (settings.dyslexiaFont) root.classList.add('dyslexia-font');
-    else root.classList.remove('dyslexia-font');
+    // 4. Inyectar todos los filtros y tamaños
+    body.classList.add(`text-size-${settings.textSize}`);
+    if (settings.highContrast) body.classList.add('high-contrast');
+    if (settings.reducedAnimations) body.classList.add('reduced-motion');
+    if (settings.dyslexiaFont) body.classList.add('dyslexia-font');
+    if (settings.increasedSpacing) body.classList.add('spacing-increased');
+    if (settings.blueLightFilter) body.classList.add('blue-light-filter');
+    if (settings.colorSaturation !== 100) body.classList.add(`saturation-${settings.colorSaturation}`);
+    if (settings.uppercaseText) body.classList.add('force-uppercase');
 
-    // --- 6. Espaciado Aumentado ---
-    if (settings.increasedSpacing) root.classList.add('spacing-increased');
-    else root.classList.remove('spacing-increased');
+  }, [settings]);
 
-    // ==========================================
-    // --- NUEVAS FUNCIONES VISUALES (PASO 1) ---
-    // ==========================================
-
-    // 7. Filtro de Luz Azul
-    if (settings.blueLightFilter) root.classList.add('blue-light-filter');
-    else root.classList.remove('blue-light-filter');
-
-    // 8. Saturación de Color
-    root.classList.remove('saturation-50', 'saturation-150');
-    if (settings.colorSaturation === 50) root.classList.add('saturation-50');
-    if (settings.colorSaturation === 150) root.classList.add('saturation-150');
-
-    // 9. Forzar Mayúsculas
-    if (settings.uppercaseText) root.classList.add('force-uppercase');
-    else root.classList.remove('force-uppercase');
-
-  }, [settings, isLoaded]);
-
-  // Funciones originales
+  // Funciones de actualización
   const updateTextSize = (size) => setSettings(s => ({ ...s, textSize: size }));
   const updateHighContrast = (val) => setSettings(s => ({ ...s, highContrast: val }));
   const updateTheme = (val) => setSettings(s => ({ ...s, theme: val }));
   const updateReducedAnimations = (val) => setSettings(s => ({ ...s, reducedAnimations: val }));
   const updateDyslexiaFont = (val) => setSettings(s => ({ ...s, dyslexiaFont: val }));
   const updateIncreasedSpacing = (val) => setSettings(s => ({ ...s, increasedSpacing: val }));
-  
-  // Nuevas funciones actualizadoras
   const updateBlueLightFilter = (val) => setSettings(s => ({ ...s, blueLightFilter: val }));
   const updateColorSaturation = (val) => setSettings(s => ({ ...s, colorSaturation: val }));
   const updateUppercaseText = (val) => setSettings(s => ({ ...s, uppercaseText: val }));
@@ -124,14 +82,12 @@ export const AccessibilityProvider = ({ children }) => {
     updateReducedAnimations,
     updateDyslexiaFont,
     updateIncreasedSpacing,
-    // Exportamos las nuevas
     updateBlueLightFilter,
     updateColorSaturation,
     updateUppercaseText,
     updatePreventAccidentalClicks,
     updateShowGlossary,
-    resetToDefaults,
-    loadSettings
+    resetToDefaults
   };
 
   return (
